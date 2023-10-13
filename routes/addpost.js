@@ -42,6 +42,39 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
   }
 });
 
+
+addPost.get("/listing",async(req,res)=>{
+  try{
+    const posts = await Post.find().exec();
+
+    console.log("post",posts.length);
+    // if(posts.length === 0){
+    //   res.json({
+    //     responseCode: 404,
+    //     responseStatus: "success",
+    //     responseMsg: "No Post Available",
+    //     responseData:posts
+    //   });
+
+    // } else {
+      res.json({
+        responseCode: 200,
+        responseStatus: "success",
+        responseMsg: "successfully receive",
+        responseData:posts
+      });
+    // }
+
+
+  }catch(err){
+    console.log(err);
+    res.json({
+      responseCode: 500,
+      responseStatus: "error",
+      responseMsg: "Error In Route",
+    });
+  }
+})
 // get post by category
 addPost.post("/category",async(req,res)=>{
   const category = req.body.category;
