@@ -16,7 +16,7 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
   try {
     const title = req.body.title;
     const content = req.body.content;
-    const productImage = req.file.path; // Assuming the image file is uploaded as "postImg"
+    const productImage = req.file?.path; // Assuming the image file is uploaded as "postImg"
     const category = req.body.category;
     const post = new Post({
       title,
@@ -24,8 +24,6 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
       productImage,
       category,
     });
-
-
     await post.save();
     res.json({
       responseCode: 200,
@@ -51,23 +49,22 @@ addPost.post("/category",async(req,res)=>{
     const posts = await Post.find({ category }).exec();
 
     console.log("post",posts.length);
-    if(posts.length === 0){
-      res.json({
-        responseCode: 404,
-        responseStatus: "success",
-        responseMsg: "No Post Available",
-        responseData:posts
-      });
+    // if(posts.length === 0){
+    //   res.json({
+    //     responseCode: 404,
+    //     responseStatus: "success",
+    //     responseMsg: "No Post Available",
+    //     responseData:posts
+    //   });
 
-    } else {
+    // } else {
       res.json({
         responseCode: 200,
         responseStatus: "success",
         responseMsg: "successfully receive",
         responseData:posts
       });
-    }
-
+    // }
 
 
   }catch(err){

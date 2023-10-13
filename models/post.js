@@ -3,15 +3,15 @@ const mongoose = require("mongoose")
 const postSchema = mongoose.Schema({
     title:{
         type:String,
-        required:true
+        // required:true
     },
     content:{
         type:String,
-        required:true
+        // required:true
     },
     category:{
         type:String,
-        required:true
+        // required:true
     },
     productImage:{
         type:String,
