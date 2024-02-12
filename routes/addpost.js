@@ -43,30 +43,37 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
 });
 
 
-addPost.get("/listing",async(req,res)=>{
-  try{
-    const posts = await Post.find().exec();
+addPost.post("/listing", async (req, res) => {
+  try {
+    let { page = page || 1, limit = limit || 5, sortBy = sortBy || '_id', sortOrder = sortOrder || 1 } = req.body;
 
-    console.log("post",posts.length);
-    // if(posts.length === 0){
-    //   res.json({
-    //     responseCode: 404,
-    //     responseStatus: "success",
-    //     responseMsg: "No Post Available",
-    //     responseData:posts
-    //   });
+    page = parseInt(page);
+    limit = parseInt(limit);
 
-    // } else {
-      res.json({
-        responseCode: 200,
-        responseStatus: "success",
-        responseMsg: "successfully receive",
-        responseData:posts
-      });
-    // }
+    const sortOptions = {};
+    sortOptions[sortBy] = sortOrder;
 
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / limit);
+    const offset = (page - 1) * limit;
 
-  }catch(err){
+    const posts = await Post.find()
+      .sort(sortOptions)
+      .limit(limit)
+      .skip(offset)
+      .exec();
+
+    res.json({
+      responseCode: 200,
+      responseStatus: "success",
+      responseMsg: "successfully received",
+      responseData: {
+        posts,
+        totalPages,
+        currentPage: page
+      }
+    });
+  } catch (err) {
     console.log(err);
     res.json({
       responseCode: 500,
@@ -74,7 +81,7 @@ addPost.get("/listing",async(req,res)=>{
       responseMsg: "Error In Route",
     });
   }
-})
+});
 // get post by category
 addPost.post("/category",async(req,res)=>{
   const category = req.body.category;
