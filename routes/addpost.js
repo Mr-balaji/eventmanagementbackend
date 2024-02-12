@@ -45,7 +45,7 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
 
 addPost.post("/listing", async (req, res) => {
   try {
-    let { page = page || 1, limit = limit || 5, sortBy = sortBy || '_id', sortOrder = sortOrder || 1,search } = req.body;
+    let { page  , limit  , sortBy  , sortOrder  ,search } = req.body;
 
     page = parseInt(page);
     limit = parseInt(limit);
@@ -56,6 +56,8 @@ addPost.post("/listing", async (req, res) => {
     const totalPosts = await Post.countDocuments();
     const totalPages = Math.ceil(totalPosts / limit);
     const offset = (page - 1) * limit;
+
+    let query ={}
 
     if (search) {
       query = { $or: [{ title: { $regex: search, $options: 'i' } }, { content: { $regex: search, $options: 'i' } },{ category: { $regex: search, $options: 'i' } }] };
