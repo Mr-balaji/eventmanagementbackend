@@ -71,7 +71,7 @@ addPost.post("/listing", async (req, res) => {
     let query ={}
 
     if (search) {
-      query = { $or: [{ title: { $regex: search, $options: 'i' } }, { content: { $regex: search, $options: 'i' } },{ category: { $regex: search, $options: 'i' } }] };
+      query = { $or: [{ title: { $regex: search, $options: 'i' } }, { content: { $regex: search, $options: 'i' } },{ category: { $regex: search, $options: 'i' } },{ name: { $regex: search, $options: 'i' } },{ email: { $regex: search, $options: 'i' } },{ DOB: { $regex: search, $options: 'i' } },{ phoneNumber: { $regex: search, $options: 'i' } }] };
     }
 
     const posts = await Post.find(query)
