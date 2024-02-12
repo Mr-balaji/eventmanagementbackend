@@ -18,11 +18,22 @@ addPost.post("/", upload.single("postImg"), async (req, res) => {
     const content = req.body.content;
     const productImage = req.file?.path; // Assuming the image file is uploaded as "postImg"
     const category = req.body.category;
+     const name = req.body.name;
+     const email = req.body.email;
+     const DOB = req.body.DOB;
+     const phoneNumber = req.body.phoneNumber;
+
+
+
     const post = new Post({
       title,
       content,
       productImage,
       category,
+      name,
+      email,
+      DOB,
+      phoneNumber
     });
     await post.save();
     res.json({
@@ -122,6 +133,74 @@ addPost.post("/category",async(req,res)=>{
     });
   }
 })
+
+addPost.get("/:id",async(req,res)=>{
+  const { id } = req.params;
+
+  console.log("id",id);
+  try{
+    const posts = await Post.findById({ _id:id }).exec();
+      res.json({
+        responseCode: 200,
+        responseStatus: "success",
+        responseMsg: "successfully receive",
+        responseData:posts
+      });
+
+  }catch(err){
+    console.log(err);
+    res.json({
+      responseCode: 500,
+      responseStatus: "error",
+      responseMsg: "Error In Route",
+    });
+  }
+})
+
+addPost.put("/:id",async(req,res)=>{
+  const id = req.params.id;
+
+  try{
+    const posts = await Post.findOneAndUpdate({_id:id},req.body).exec();
+      res.json({
+        responseCode: 200,
+        responseStatus: "success",
+        responseMsg: "successfully receive",
+        responseData:posts
+      });
+
+  }catch(err){
+    console.log(err);
+    res.json({
+      responseCode: 500,
+      responseStatus: "error",
+      responseMsg: "Error In Route",
+    });
+  }
+})
+
+addPost.delete("/:id",async(req,res)=>{
+  const {id} = req.params
+  try{
+    const posts = await Post.deleteOne({ _id: id }).exec();
+      res.json({
+        responseCode: 200,
+        responseStatus: "success",
+        responseMsg: "successfully receive",
+        responseData:posts
+      });
+
+  }catch(err){
+    console.log(err);
+    res.json({
+      responseCode: 500,
+      responseStatus: "error",
+      responseMsg: "Error In Route",
+    });
+  }
+})
+
+
 
 
 
