@@ -8,6 +8,7 @@ require("dotenv").config();
 const userRoute = require("./routes/userRoute");
 const addPost = require('./routes/addpost');
 const bookingRoute = require('./routes/bookRoute');
+const attendce = require('./routes/attendense');
 app.use(bodyParser.json());
 
 // app.use(cors());
@@ -17,6 +18,8 @@ app.use("/uploads",express.static('uploads'));
 app.use("/api/user", userRoute);
 app.use("/api/addpost", addPost);
 app.use("/api/booking", bookingRoute);
+app.use("/api/attendense", attendce);
+
 
 
 
