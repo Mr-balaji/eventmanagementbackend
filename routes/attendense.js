@@ -47,14 +47,14 @@ attendce.post("/listing", async (req, res) => {
       sortOptions[sortBy] = sortOrder;
 
       const totalAttednce = await Attendence.countDocuments();
-      console.log("totalAttednce",totalAttednce);
+
       const totalPages = Math.ceil(totalAttednce / limit);
       const offset = (page - 1) * limit;
 
       let query ={}
 
       if (search) {
-        query = { $or: [{ title: { $regex: search, $options: 'i' } }, { content: { $regex: search, $options: 'i' } },{ category: { $regex: search, $options: 'i' } },{ name: { $regex: search, $options: 'i' } },{ email: { $regex: search, $options: 'i' } },{ DOB: { $regex: search, $options: 'i' } },{ phoneNumber: { $regex: search, $options: 'i' } }] };
+        query = { $or: [{ leavetype: { $regex: search, $options: 'i' } }, { fromDate: { $regex: search, $options: 'i' } },{ toDate: { $regex: search, $options: 'i' } },{ session1: { $regex: search, $options: 'i' } },{ session2: { $regex: search, $options: 'i' } } ] };
       }
 
       const attendence = await Attendence.find(query)
