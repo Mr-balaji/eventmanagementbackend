@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 // Define the booking schema
 const sessionSchema = new mongoose.Schema({
   leavetype: {
-    type: Object,
+    type: String,
   },
   fromDate: {
-    type: Object,
+    type: String,
   },
   toDate: {
-    type: Object,
+    type: String,
 
   },
   session1: {
-    type: Object,
+    type: String,
   },
   session2: {
-    type: Object,
+    type: String,
   },
   reason:{
     type:String,

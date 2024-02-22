@@ -47,6 +47,7 @@ attendce.post("/listing", async (req, res) => {
       sortOptions[sortBy] = sortOrder;
 
       const totalAttednce = await Attendence.countDocuments();
+      console.log("totalAttednce",totalAttednce);
       const totalPages = Math.ceil(totalAttednce / limit);
       const offset = (page - 1) * limit;
 
@@ -69,6 +70,7 @@ attendce.post("/listing", async (req, res) => {
         responseData: {
           attendence,
           totalPages,
+          totalAttednce,
           currentPage: page
         }
       });
@@ -126,6 +128,31 @@ attendce.post("/listing", async (req, res) => {
       });
     }
   })
+
+  attendce.get("/:id",async(req,res)=>{
+    const id = req.params.id;
+
+    try{
+      const attence = await Attendence.findById({_id:id}).exec();
+        res.json({
+          responseCode: 200,
+          responseStatus: "success",
+          responseMsg: "successfully receive",
+          responseData:attence
+        });
+
+    }catch(err){
+      console.log(err);
+      res.json({
+        responseCode: 500,
+        responseStatus: "error",
+        responseMsg: "Error In Route",
+      });
+    }
+  })
+
+
+
 
 
 
