@@ -54,7 +54,7 @@ attendce.post("/listing", async (req, res) => {
       let query ={}
 
       if (search) {
-        query = { $or: [{ leavetype: { $regex: search, $options: 'i' } }, { fromDate: { $regex: search, $options: 'i' } },{ toDate: { $regex: search, $options: 'i' } },{ session1: { $regex: search, $options: 'i' } },{ session2: { $regex: search, $options: 'i' } } ] };
+        query = { $or: [{ leavetype: { $regex: search, $options: 'i' } }, { fromDate: { $regex: search, $options: 'i' } },{ toDate: { $regex: search, $options: 'i' } },{ session1: { $regex: search, $options: 'i' } },{ session2: { $regex: search, $options: 'i' } },{ reason: { $regex: search, $options: 'i' } } ] };
       }
 
       const attendence = await Attendence.find(query)
